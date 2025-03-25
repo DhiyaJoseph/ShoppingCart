@@ -100,7 +100,7 @@ const Products = () => {
 
       {cart.length === 0 ? (
         <div className="empty-cart">
-          <p>Your cart is empty</p>
+          <p className='empty1'>Your cart is empty</p>
           <p>Add some products to see them here!</p>
         </div>
       ) : (

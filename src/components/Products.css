@@ -25,8 +25,9 @@
 .product-card {
   padding: 1rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: white;
 }
 
 .product-name {
@@ -53,8 +54,9 @@
   padding: 1rem;
   margin-bottom: 2rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: white;
 }
 
 .subtotal {
@@ -93,8 +95,9 @@
   padding: 1rem;
   margin-bottom: 1rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  background-color: white;
 }
 
 .cart-item-content {
@@ -139,5 +142,9 @@
   padding: 1rem;
   color: gray;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 8px;
+  background-color: white;
+}
+.empty1{
+  font-weight: 600;
 }
