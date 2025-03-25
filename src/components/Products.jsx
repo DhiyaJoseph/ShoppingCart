@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Card, Button, Typography, IconButton, Paper, Grid, Divider, LinearProgress } from '@mui/material';
-import AddIcon from '@mui/icons-material/Add';
-import RemoveIcon from '@mui/icons-material/Remove';
+import './Products.css';
 
 const Products = () => {
   const PRODUCTS = [
@@ -53,115 +51,82 @@ const Products = () => {
   if (isFreeGiftEligible && !hasFreeGift) {
     cart.push({ ...FREE_GIFT, quantity: 1 });
   }
+
   return (
-    <Box sx={{ p: 4 }}>
+    <div className="container">
+      <h1 className="title">Shopping Cart</h1>
 
-      <Typography variant="h4" mb={4} sx={{ textAlign: 'center', fontWeight: 600 }}>
-        Shopping Cart
-      </Typography>
-
-
-      <Typography variant="h5" mb={2} sx={{ fontWeight: 600 ,textAlign:'justify'}}>Products</Typography>
-      <Grid container spacing={2} >
+      <h2 className="section-title">Products</h2>
+      <div className="products-grid">
         {PRODUCTS.map((product) => (
-          <Grid item key={product.id} xs={12} sm={6} md={3}>
-            <Card sx={{ p: 2 }}>
-              <Typography variant="h6" sx={{ fontWeight: 550 }}>{product.name}</Typography>
-              <Typography sx={{ fontWeight: 500 }}>₹{product.price}</Typography>
-              <Button
-                variant="contained"
-                sx={{ mt: 2, width: '100%' }}
-
-                onClick={() => addToCart(product)}
-              >
-                Add to Cart
-              </Button>
-            </Card>
-          </Grid>
+          <div key={product.id} className="product-card">
+            <div className="product-name">{product.name}</div>
+            <div className="product-price">₹{product.price}</div>
+            <button className="add-button" onClick={() => addToCart(product)}>
+              Add to Cart
+            </button>
+          </div>
         ))}
-      </Grid>
+      </div>
 
-      <Typography variant="h5" mt={4} mb={2} sx={{ fontWeight: 600 ,textAlign:'justify'}}>Cart Summary</Typography>
-      <Paper sx={{ p: 2, mb: 4 }}>
-        {/* Subtotal Section with Divider */}
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
-          <Typography sx={{ fontWeight: 600 }}>Subtotal:</Typography>
-          <Typography sx={{ fontWeight: 600 }}>₹{cartTotal}</Typography>
-        </Box>
-        <Divider sx={{ my: 2 }} />
+      <h2 className="section-title">Cart Summary</h2>
+      <div className="cart-summary">
+        <div className="subtotal">
+          <span>Subtotal:</span>
+          <span>₹{cartTotal}</span>
+        </div>
+        <div className="divider" />
 
-
-        <Box sx={{ bgcolor: '#E0F7FA', p: 2, borderRadius: 2 }}>
+        <div className="progress-box">
           {cartTotal < THRESHOLD ? (
             <>
-              <Typography>
-                Add ₹{THRESHOLD - cartTotal} more to get a <b>FREE Wireless Mouse!</b>
-              </Typography>
-              <LinearProgress
-                variant="determinate"
-                value={(cartTotal / THRESHOLD) * 100}
-                sx={{
-                  my: 2,
-                  backgroundColor: '#e0e0e0',
-                  height: 10,
-                  borderRadius: 4,
-                  '& .MuiLinearProgress-bar': {
-                    backgroundColor: cartTotal >= THRESHOLD ? 'aliceblue' : '#1976d2'
-                  }
-                }}
-              />
-
+              <p>Add ₹{THRESHOLD - cartTotal} more to get a <b>FREE Wireless Mouse!</b></p>
+              <div className="progress-bar-container">
+                <div 
+                  className="progress-bar" 
+                  style={{ width: `${(cartTotal / THRESHOLD) * 100}%` }}
+                />
+              </div>
             </>
           ) : (
-            <Typography><b>Congratulations!</b> You got a free Wireless Mouse!</Typography>
+            <p><b>Congratulations!</b> You got a free Wireless Mouse!</p>
           )}
-        </Box>
-      </Paper>
-      
+        </div>
+      </div>
+
       {cart.length > 0 && (
-        <Typography variant="h5" mt={4} mb={2} sx={{ fontWeight: 600,textAlign:'justify' }}>
-          Cart Items
-        </Typography>
+        <h2 className="section-title">Cart Items</h2>
       )}
 
       {cart.length === 0 ? (
-        <Paper sx={{ p: 2, textAlign: 'center', fontWeight: 600, color: 'gray' }}>
-          <Typography sx={{ fontWeight: 600, color: 'gray' }}>Your cart is empty</Typography>
-          <Typography>Add some products to see them here!</Typography>
-        </Paper>
+        <div className="empty-cart">
+          <p>Your cart is empty</p>
+          <p>Add some products to see them here!</p>
+        </div>
       ) : (
         cart.map((item) => (
-          <Card key={item.id} sx={{ mb: 2, p: 2 }}>
-            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <div key={item.id} className="cart-item">
+            <div className="cart-item-content">
+              <div>
+                <h3 className="product-name">{item.name}</h3>
+                <p>₹{item.price} × {item.quantity} = ₹{item.price * item.quantity}</p>
+              </div>
 
-              {/* Product Info */}
-              <Box>
-                <Typography variant="h6" sx={{ fontWeight: 600 }}>{item.name}</Typography>
-                <Typography color="text.secondary">₹{item.price} × {item.quantity} = ₹{item.price * item.quantity}</Typography>
-              </Box>
-
-              {/* Action Buttons */}
               {item.id !== FREE_GIFT.id ? (
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                  <IconButton sx={{ bgcolor: 'red', color: 'white',borderRadius: '8px',padding: '4px 8px', '&:hover': { bgcolor: '#d32f2f' } }} onClick={() => updateQuantity(item, -1)}>
-                    <RemoveIcon />
-                  </IconButton>
-                  <Typography sx={{ fontWeight: 600 }}>{item.quantity}</Typography>
-                  <IconButton sx={{ bgcolor: 'green', color: 'white', borderRadius: '8px',padding: '4px 8px','&:hover': { bgcolor: '#388e3c' } }} onClick={() => updateQuantity(item, 1)}>
-                    <AddIcon />
-                  </IconButton>
-                </Box>
+                <div className="quantity-controls">
+                  <button className="quantity-button decrease-button" onClick={() => updateQuantity(item, -1)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button className="quantity-button increase-button" onClick={() => updateQuantity(item, 1)}>+</button>
+                </div>
               ) : (
-                <Typography color="success.main" sx={{ bgcolor: '#E8F5E9', px: 2, py: 1, borderRadius: '12px',fontSize:'12px' ,fontWeight: 600 }}>
-                  FREE GIFT
-                </Typography>
+                <span className="free-gift-badge">FREE GIFT</span>
               )}
-            </Box>
-          </Card>
+            </div>
+          </div>
         ))
       )}
-    </Box>
+    </div>
   );
 };
 
-export default Products;  
+export default Products;
